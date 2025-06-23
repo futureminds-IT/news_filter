@@ -45,7 +45,7 @@ class NewsListActionEventListener
         if ($settings['enableFilter'] ?? false) {
             $search = GeneralUtility::makeInstance(Search::class);
 
-            $vars = GeneralUtility::_POST('tx_news_pi1');
+            $vars = $GLOBALS['TYPO3_REQUEST']->getParsedBody()['tx_news_pi1'] ?? null;
             if (isset($vars['search']) && is_array($vars['search'])) {
                 /** @var Search $search */
                 $search = $this->propertyMapper->convert($vars['search'], Search::class);
@@ -100,8 +100,8 @@ class NewsListActionEventListener
                     $queryBuilder->createNamedParameter(explode(',', $pidList), Connection::PARAM_INT_ARRAY)
                 )
             )
-            ->execute()
-            ->fetchAll();
+            ->executeQuery()
+            ->fetchAllAssociative();
 
         foreach ($rows as $row) {
             $list[] = $row['uid'];

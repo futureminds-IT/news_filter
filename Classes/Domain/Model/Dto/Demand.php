@@ -45,7 +45,7 @@ class Demand extends NewsDemand
         return $this->filteredTags;
     }
 
-    public function setFilteredTags(array $filteredTags)
+    public function setFilteredTags(array $filteredTags):void
     {
         $this->filteredTags = $filteredTags;
     }

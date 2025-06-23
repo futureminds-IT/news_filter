@@ -29,7 +29,7 @@ class Search extends NewsSearch
     /**
      * @param string $fromDate
      */
-    public function setFromDate(string $fromDate)
+    public function setFromDate(string $fromDate):void
     {
         $this->fromDate = $fromDate;
     }
@@ -45,7 +45,7 @@ class Search extends NewsSearch
     /**
      * @param string $toDate
      */
-    public function setToDate(string $toDate)
+    public function setToDate(string $toDate):void
     {
         $this->toDate = $toDate;
     }
@@ -61,11 +61,11 @@ class Search extends NewsSearch
     /**
      * @param array $filteredTags
      */
-    public function setFilteredTags(array $filteredTags)
+    public function setFilteredTags(array $filteredTags):void
     {
         $this->filteredTags = $filteredTags;
     }
-
+ 
     /**
      * @return array
      */
@@ -77,7 +77,7 @@ class Search extends NewsSearch
     /**
      * @param array $filteredCategories
      */
-    public function setFilteredCategories(array $filteredCategories)
+    public function setFilteredCategories(array $filteredCategories):void
     {
         $this->filteredCategories = $filteredCategories;
     }
