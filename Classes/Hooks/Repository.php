@@ -43,22 +43,33 @@ class Repository
 
         // categories
         $categories = $demand->getFilteredCategories();
+        $categoryConstraint = null;
         if (!empty($categories)) {
-            $categoryConstraint = [];
+            $categoryConstraintArr = [];
             foreach ($categories as $category) {
-                $categoryConstraint[] = $query->contains('categories', $category);
+                $categoryConstraintArr[] = $query->contains('categories', $category);
             }
-            $constraints['filteredCategories'] = $query->logicalOr(...$categoryConstraint);
+            $categoryConstraint = $query->logicalOr(...$categoryConstraintArr);
         }
 
         // tags
         $tags = $demand->getFilteredTags();
+        $tagConstraint = null;
         if (!empty($tags)) {
-            $tagConstraint = [];
+            $tagConstraintArr = [];
             foreach ($tags as $tag) {
-                $tagConstraint[] = $query->contains('tags', $tag);
+                $tagConstraintArr[] = $query->contains('tags', $tag);
             }
-            $constraints['filteredTags'] = $query->logicalOr(...$tagConstraint);
+            $tagConstraint = $query->logicalOr(...$tagConstraintArr);
+        }
+
+        // Combine tag and category constraints with AND logic
+        if ($categoryConstraint && $tagConstraint) {
+            $constraints[] = $query->logicalAnd($categoryConstraint, $tagConstraint);
+        } elseif ($categoryConstraint) {
+            $constraints[] = $categoryConstraint;
+        } elseif ($tagConstraint) {
+            $constraints[] = $tagConstraint;
         }
     }
 }
